@@ -1,0 +1,135 @@
+/*
+   statusbar-overlay sets the background color for the overlay. Black text is the default when the statusbar plugin is not added. When the
+   statusbar plugin is added, it also adds default setting to make the content white via:
+
+       <preference name="StatusBarStyle" value="lightcontent"/>
+
+   Setting the background color to black will allow the default light content (white text/icons) to show on it. The statusbar plugin is included
+   in the config.xml file and will be added by the CLI when you build locally.
+
+   See https://github.com/apache/cordova-plugin-statusbar
+*/
+
+.statusbar-overlay {
+    background: #000000;
+}
+
+.navbar-inner{
+    background: #fcd650;
+}
+
+.content-block{padding:0;margin:0}
+
+#portofoliu-container{
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+#proiect-home{
+    display: inline-block;
+    width: 50%;
+    margin:0;
+    padding:0;
+    overflow:hidden;
+ /*   animation: home 1s ease-in-out; */
+    position:absolute;
+    top:44px;
+    left:0;
+}
+
+.proiecte-home-position{
+   /* position:relative!important; */
+   left:0px;
+}
+
+@keyframes home{
+    0%{opacity:0.5;}
+    100%{opacity:1;}
+}
+
+.nume-portofoliu{
+    position: absolute;
+    z-index:100;
+    opacity:1;
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    padding: 2px 7px 1px 7px;
+    margin-top: 8px;
+    animation: nume-proiect-anim 2s ease-in-out;
+}
+
+@keyframes nume-proiect-anim {
+    0%{transform:translateY(-50px)}
+    40%{transform:translateY(-50px)}
+    100%{transform:translateY(0px)}
+}
+
+.thumb-portofoliu{
+    z-index:99;
+    height: auto;
+    overflow: hidden;
+}
+/*
+.thumb-portofoliu:hover{
+
+}
+*/
+.thumb-portofoliu img{
+    width:100%;
+    height:auto;
+    margin:0;
+    padding:0;
+}
+
+.home-last-proiect{
+    padding-bottom:44px!important;
+}
+
+.inactiveProiect{
+    opacity:0;
+    z-index: 9;
+}
+
+.activeProiect{
+    width:100%!important;
+    transition: 1s;
+    z-index:100;
+    height:100%!important;
+}
+
+
+.elemPos0{
+    transition: 1s;
+}
+
+.proiect-active-content{
+ /*   display: flex; */
+    flex-wrap: wrap;
+    display:none;
+    transition:1s;
+}
+
+.proiect-active-content img{
+    width:50%;
+    height:100%;
+}
+
+.active-project-close{
+    display:none;
+}
+
+.project-content-flex{
+    display:flex!important;
+    transition:1s;
+    animation: 1s project-active-content ease-in-out;
+}
+
+@keyframes project-active-content {
+    0%{transform:translateY(400px);}
+    100%{transform:translateY(0px);}
+}
+
+.btnBackActiveP{
+    display:inherit!important;
+}

@@ -1,0 +1,21 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {}
+    },
+    "installed_plugins": {
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "ro.inoveo.inoveoapp"
+        },
+        "cordova-plugin-console": {
+            "PACKAGE_NAME": "ro.inoveo.inoveoapp"
+        },
+        "cordova-plugin-statusbar": {
+            "PACKAGE_NAME": "ro.inoveo.inoveoapp"
+        }
+    },
+    "dependent_plugins": {}
+}
