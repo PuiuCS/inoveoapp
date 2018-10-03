@@ -22,7 +22,7 @@
     <meta name="msapplication-tap-highlight" content="no">
 
     <!-- Your app title -->
-    <title>My App</title>
+    <title>INOVEO</title>
 
     <!-- This template defaults to the iOS CSS theme. To support both iOS and material design themes, see the Framework7 Tutorial at the link below:
         http://www.idangero.us/framework7/tutorials/maintain-both-ios-and-material-themes-in-single-app.html
@@ -49,13 +49,18 @@
                 elem[nrClass].classList.remove("inactiveProiect");
                 elem[nrClass].classList.remove("elemPos"+nrClass);
                 elem[nrClass].classList.add("activeProiect");
+                var elemProiectHeight = document.querySelector("#style-div-active-height");
+                var elemActivePictures = document.querySelectorAll(".activeProiect img");
+                elemProiectHeight.innerHTML = "<style>.activeHeight{ height:"+((elemActivePictures[0].offsetHeight*(Math.floor(elemActivePictures.length/2) + 2))+44)+"px!important; }</style>";
+                elem[nrClass].classList.add("activeHeight");
+                document.querySelector('.home-title').innerHTML = document.querySelector('.activeProiect .nume-portofoliu').innerHTML;
                 document.querySelector(".page-content").scroll({
                     top: 0, 
                     left: 0, 
                     behavior: 'smooth' 
                 });
-                console.log(document.querySelector(".page-content").scrollTop);
-                setTimeout(function(){addClassProject(nrClass);}, 900);
+                
+                setTimeout(function(){addClassProject(nrClass);}, 700);
                 document.querySelector(".active-project-close").classList.add("btnBackActiveP");
                 document.querySelector(".active-project-close").setAttribute("onclick", "closeProject("+nrClass+")");
             }
@@ -65,6 +70,8 @@
             var elem = document.querySelectorAll("#proiect-home");
             if(elem[nrClass].classList.contains("activeProiect")){
                 elem[nrClass].classList.remove("activeProiect");
+                elem[nrClass].classList.remove("activeHeight");
+                document.querySelector('.home-title').innerHTML = "HELLO";
                 elem[nrClass].querySelector(".proiect-active-content").classList.remove("project-content-flex");
                 elem[nrClass].classList.add("elemPos"+nrClass);
                 for (var iClick = 0; iClick < elem.length; iClick++) {
@@ -79,10 +86,45 @@
             var elem = document.querySelectorAll("#proiect-home");
             elem[nrClass].querySelector(".proiect-active-content").classList.add("project-content-flex");
         }
+
+        function resizeFunction(){
+            var w = window.outerWidth;
+            var imgPortfolioWidth = w/2;
+            
+            var imgPortfolioHeight = (imgPortfolioWidth/1.424) - 2 ;
+            var elemProiect = document.querySelectorAll("#proiect-home");
+            var iElem = 0;
+			var elemPosition = 0;
+			var nrElem = elemProiect.length;
+            var iTop = 0;
+            var styleSelector = document.querySelectorAll("#elemStyle");
+            for(iElem = 0; iElem < nrElem; iElem++){
+                elemProiect[iElem].style.height = imgPortfolioHeight+"px";
+                if(iElem !=0){
+						elemPosition = Math.floor(iElem/2);
+                        iTop= 44+(imgPortfolioHeight*elemPosition);
+                        if(iElem % 2 != 0){
+                            //document.querySelector('.elemPos'+iElem).style.transform="translate("+imgPortfolioWidth+"px, "+(iTop-44)+"px)";
+                            styleSelector[iElem].innerHTML =".elemPos"+iElem+"{ transform: translate("+imgPortfolioWidth+"px, "+(iTop-44)+"px); transition: 1s ease-in-out; z-index:"+(100-iElem)+"}";
+                        }else{
+                            styleSelector[iElem].innerHTML =".elemPos"+iElem+"{ transform: translateY("+(iTop-44)+"px); transition: 1s ease-in-out; z-index:"+(100-iElem)+"}";
+                        }
+                    }else{
+                        styleSelector[iElem].innerHTML =".elemPos"+iElem+"{ transform: translateY("+(iTop)+"px); transition: 1s ease-in-out; z-index:"+(100-iElem)+"}";
+                    }
+                    if(elemProiect[iElem].classList.contains("activeProiect")){
+                        
+                        var elemProiectHeight = document.querySelector("#style-div-active-height");
+                        var elemActivePictures = document.querySelectorAll(".activeProiect img");
+                        elemProiectHeight.innerHTML = "<style>.activeHeight{ height:"+((elemActivePictures[1].offsetHeight*(Math.floor(elemActivePictures.length/2) + 2))+44)+"px!important; }</style>";
+                        console.log("active-resize: "+elemActivePictures[1].offsetHeight);
+                    }
+            }
+        }
     </script>
 </head>
 
-<body>
+<body onresize="resizeFunction()">
     <!-- Status bar overlay for full screen mode (PhoneGap) -->
     <div class="statusbar-overlay"></div>
 
@@ -103,7 +145,7 @@
             <div class="navbar">
                 <div class="navbar-inner">
                     <!-- We need cool sliding animation on title element, so we have additional "sliding" class -->
-                    <div class="center sliding">Home</div>
+                    <div class="center sliding home-title">HELLO</div>
                     <div class="right">
                         <!--
                           Right link contains only icon - additional "icon-only" class
@@ -120,9 +162,10 @@
                     <!-- Scrollable page content -->
                     <div class="page-content">
                         <div class="content-block">
-                            <div style="width:1px; height:1px;position:absolute; top:-1px; overflow:hidden;" id="hidden-anchor-div"><a id="hidden-anchor" href="hidden-anchor-div"></a></div>
                             <div id="style-div">                              
                             </div>
+                            <div id="style-div-active-height">                              
+                                </div>
                             <div id="portofoliu-container">    
                             </div>
                             

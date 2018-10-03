@@ -9,9 +9,10 @@
             * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
             * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
                 * Enable inline JS: add 'unsafe-inline' to default-src
-        -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">
-
+        
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src * data:;">
+-->
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *; img-src * " />
     <!-- Required meta tags-->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
@@ -21,7 +22,7 @@
     <meta name="msapplication-tap-highlight" content="no">
 
     <!-- Your app title -->
-    <title>My App</title>
+    <title>INOVEO</title>
 
     <!-- This template defaults to the iOS CSS theme. To support both iOS and material design themes, see the Framework7 Tutorial at the link below:
         http://www.idangero.us/framework7/tutorials/maintain-both-ios-and-material-themes-in-single-app.html
@@ -31,9 +32,99 @@
     <link rel="stylesheet" href="lib/framework7/css/framework7.ios.colors.min.css">
 
     <link rel="stylesheet" href="css/styles.css">
+    <script>
+        function handleClickul(nrClass) {
+			var elem = document.querySelectorAll("#proiect-home");
+            if(elem[nrClass].classList.contains("activeProiect")){
+             //   elem[nrClass].classList.remove("activeProiect");
+              //  elem[nrClass].classList.add("elemPos"+nrClass);
+             //   for (var iClick = 0; iClick < elem.length; iClick++) {
+			//		elem[iClick].classList.remove("inactiveProiect");
+             //   }
+            }
+            else{
+                for (var iClick = 0; iClick < elem.length; iClick++) {
+					elem[iClick].classList.add("inactiveProiect");
+                }
+                elem[nrClass].classList.remove("inactiveProiect");
+                elem[nrClass].classList.remove("elemPos"+nrClass);
+                elem[nrClass].classList.add("activeProiect");
+                var elemProiectHeight = document.querySelector("#style-div-active-height");
+                var elemActivePictures = document.querySelectorAll(".activeProiect img");
+                elemProiectHeight.innerHTML = "<style>.activeHeight{ height:"+((elemActivePictures[0].offsetHeight*(Math.floor(elemActivePictures.length/2) + 2))+44)+"px!important; }</style>";
+                elem[nrClass].classList.add("activeHeight");
+                document.querySelector('.home-title').innerHTML = document.querySelector('.activeProiect .nume-portofoliu').innerHTML;
+                document.querySelector(".page-content").scroll({
+                    top: 0, 
+                    left: 0, 
+                    behavior: 'smooth' 
+                });
+                
+                setTimeout(function(){addClassProject(nrClass);}, 700);
+                document.querySelector(".active-project-close").classList.add("btnBackActiveP");
+                document.querySelector(".active-project-close").setAttribute("onclick", "closeProject("+nrClass+")");
+            }
+            
+        }
+        function closeProject(nrClass) {
+            var elem = document.querySelectorAll("#proiect-home");
+            if(elem[nrClass].classList.contains("activeProiect")){
+                elem[nrClass].classList.remove("activeProiect");
+                elem[nrClass].classList.remove("activeHeight");
+                document.querySelector('.home-title').innerHTML = "HELLO";
+                elem[nrClass].querySelector(".proiect-active-content").classList.remove("project-content-flex");
+                elem[nrClass].classList.add("elemPos"+nrClass);
+                for (var iClick = 0; iClick < elem.length; iClick++) {
+					elem[iClick].classList.remove("inactiveProiect");
+                }
+                document.querySelector(".active-project-close").setAttribute("onclick", "");
+                document.querySelector(".active-project-close").classList.remove("btnBackActiveP");
+            }
+        }
+
+        function addClassProject(nrClass){
+            var elem = document.querySelectorAll("#proiect-home");
+            elem[nrClass].querySelector(".proiect-active-content").classList.add("project-content-flex");
+        }
+
+        function resizeFunction(){
+            var w = window.outerWidth;
+            var imgPortfolioWidth = w/2;
+            
+            var imgPortfolioHeight = (imgPortfolioWidth/1.424) - 2 ;
+            var elemProiect = document.querySelectorAll("#proiect-home");
+            var iElem = 0;
+			var elemPosition = 0;
+			var nrElem = elemProiect.length;
+            var iTop = 0;
+            var styleSelector = document.querySelectorAll("#elemStyle");
+            for(iElem = 0; iElem < nrElem; iElem++){
+                elemProiect[iElem].style.height = imgPortfolioHeight+"px";
+                if(iElem !=0){
+						elemPosition = Math.floor(iElem/2);
+                        iTop= 44+(imgPortfolioHeight*elemPosition);
+                        if(iElem % 2 != 0){
+                            //document.querySelector('.elemPos'+iElem).style.transform="translate("+imgPortfolioWidth+"px, "+(iTop-44)+"px)";
+                            styleSelector[iElem].innerHTML =".elemPos"+iElem+"{ transform: translate("+imgPortfolioWidth+"px, "+(iTop-44)+"px); transition: 1s ease-in-out; z-index:"+(100-iElem)+"}";
+                        }else{
+                            styleSelector[iElem].innerHTML =".elemPos"+iElem+"{ transform: translateY("+(iTop-44)+"px); transition: 1s ease-in-out; z-index:"+(100-iElem)+"}";
+                        }
+                    }else{
+                        styleSelector[iElem].innerHTML =".elemPos"+iElem+"{ transform: translateY("+(iTop)+"px); transition: 1s ease-in-out; z-index:"+(100-iElem)+"}";
+                    }
+                    if(elemProiect[iElem].classList.contains("activeProiect")){
+                        
+                        var elemProiectHeight = document.querySelector("#style-div-active-height");
+                        var elemActivePictures = document.querySelectorAll(".activeProiect img");
+                        elemProiectHeight.innerHTML = "<style>.activeHeight{ height:"+((elemActivePictures[1].offsetHeight*(Math.floor(elemActivePictures.length/2) + 2))+44)+"px!important; }</style>";
+                        console.log("active-resize: "+elemActivePictures[1].offsetHeight);
+                    }
+            }
+        }
+    </script>
 </head>
-<meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *; img-src * " />
-<body>
+
+<body onresize="resizeFunction()">
     <!-- Status bar overlay for full screen mode (PhoneGap) -->
     <div class="statusbar-overlay"></div>
 
@@ -54,7 +145,7 @@
             <div class="navbar">
                 <div class="navbar-inner">
                     <!-- We need cool sliding animation on title element, so we have additional "sliding" class -->
-                    <div class="center sliding">Awesome App</div>
+                    <div class="center sliding home-title">HELLO</div>
                     <div class="right">
                         <!--
                           Right link contains only icon - additional "icon-only" class
@@ -71,9 +162,15 @@
                     <!-- Scrollable page content -->
                     <div class="page-content">
                         <div class="content-block">
-                            <p>Page content goes here</p>
+                            <div id="style-div">                              
+                            </div>
+                            <div id="style-div-active-height">                              
+                                </div>
+                            <div id="portofoliu-container">    
+                            </div>
+                            
                             <!-- Link to another page -->
-                            <a href="about.html">About app</a>
+                            
                         </div>
                     </div>
                 </div>
@@ -82,7 +179,8 @@
             <div class="toolbar">
                 <div class="toolbar-inner">
                     <!-- Toolbar links -->
-                    <a href="#" class="link">Link 1</a>
+                    <a href="about.html" class="link">About app</a>
+                    <a href="#" class="active-project-close" onclick="closeProject">Close Project</a>
                     <a href="#" class="link">Link 2</a>
                 </div>
             </div>

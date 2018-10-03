@@ -10,6 +10,175 @@
    See https://github.com/apache/cordova-plugin-statusbar
 */
 
+@font-face {
+    font-family: "AauxNext Light";
+    src:url("css/fonts/AAUXNEXTLight.otf") format("opentype");
+}
+
+@font-face {
+    font-family: "AauxNext Medium";
+    src:url("css/fonts/AAUXNEXTMedium.otf") format("opentype");
+}
+
+body{
+    font-family: "AauxNext Light"!important;
+}
+
 .statusbar-overlay {
     background: #000000;
+}
+
+.navbar-inner{
+    background-color: #fcd650;
+    animation: navbar-anim-bkg 1.1s ease-in-out;
+}
+
+@keyframes navbar-anim-bkg{
+    0%{background-image:url('img/logo-inoveo-mare.png');background-position: 50% 45%;background-repeat: no-repeat;background-size: 50%;}
+    40%{background-image:url('img/logo-inoveo-mare.png');background-position: 50% 45%;background-repeat: no-repeat;background-size: 50%;}
+    100%{background-image:url('img/logo-inoveo-mare.png');background-position: 50% 0%;background-repeat: no-repeat;background-size: 0%;}
+}
+
+.navbar{
+    animation: navbar-anim 1.1s ease-in-out;
+}
+
+@keyframes navbar-anim{
+    0%{height:100%;}
+    40%{height:100%;}
+    100%{height:44px;}
+}
+
+.content-block{padding:0;margin:0}
+
+.page-content{
+    background: #fff;
+}
+
+#portofoliu-container{
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+#proiect-home{
+    display: inline-block;
+    width: 50%;
+    margin:0;
+    padding:0;
+    overflow:hidden;
+ /*   animation: home 1s ease-in-out; */
+    position:absolute;
+    top:44px;
+    left:0;
+}
+
+.proiecte-home-position{
+   /* position:relative!important; */
+   left:0px;
+}
+
+@keyframes home{
+    0%{opacity:0.5;}
+    100%{opacity:1;}
+}
+
+.nume-portofoliu{
+    position: absolute;
+    z-index:100;
+    opacity:1;
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    padding: 2px 7px 1px 7px;
+    margin-top: 8px;
+    animation: nume-proiect-anim 2s ease-in-out;
+    display:none;
+}
+
+@keyframes nume-proiect-anim {
+    0%{transform:translateY(-50px)}
+    40%{transform:translateY(-50px)}
+    100%{transform:translateY(0px)}
+}
+
+.thumb-portofoliu{
+    z-index:99;
+    height: auto;
+    overflow: hidden;
+}
+/*
+.thumb-portofoliu:hover{
+
+}
+*/
+.thumb-portofoliu img{
+    width:100%;
+    height:auto;
+    margin:0;
+    padding:0;
+}
+
+.home-last-proiect{
+    padding-bottom:44px!important;
+}
+
+.inactiveProiect{
+    opacity:0;
+   /* z-index: 9; */
+}
+
+.activeProiect{
+    width:100%!important;
+    transition: 1s;
+    z-index:200;
+    height:100%!important;
+}
+
+
+.elemPos0{
+    transition: 1s;
+}
+
+.proiect-active-content{
+ /*   display: flex; */
+    flex-wrap: wrap;
+    display:none;
+    transition:1s;
+}
+
+.proiect-active-content img{
+    width:50%;
+    height:100%;
+}
+
+.active-project-close{
+    display:none;
+}
+
+.project-content-flex{
+    display:flex!important;
+    transition:1s;
+    animation: 0.8s project-active-content ease-in-out;
+}
+
+@keyframes project-active-content {
+    0%{transform:translateY(400px);}
+    100%{transform:translateY(0px);}
+}
+
+.btnBackActiveP{
+    display:inherit!important;
+}
+
+.home-title{
+    left: 50%!important;
+    transform: translateX(-50%)!important;
+    transition: 1s;
+    animation: title-home-anim 1.5s ease-in-out;
+}
+
+@keyframes title-home-anim{
+    0%{transform:translate(-50%, -60px);opacity:0;}
+    80%{transform:translate(-50%, -60px);opacity:0;}
+    100%{transform:translate(-50%, 0px);opacity:1;}
 }

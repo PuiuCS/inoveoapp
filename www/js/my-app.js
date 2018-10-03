@@ -53,14 +53,14 @@ $$(document).on('deviceready', function() {
 						//	for(iLeft=0; iLeft<= imgPortfolioWidth; iLeft++){
 							//	elemProiect[iElem].style.left = imgPortfolioWidth+"px";
 							//	document.querySelector("#style-div").innerHTML += "<style>.elemPos"+iElem+"{ top:"+iTop+"px!important; left:"+imgPortfolioWidth+"px!important; transition: 1.7s; } </style>";
-								document.querySelector("#style-div").innerHTML += "<style>.elemPos"+iElem+"{ transform: translate("+imgPortfolioWidth+"px, "+(iTop-44)+"px); transition: 1s ease-in-out; z-index:"+(100-iElem)+"} </style>";
+								document.querySelector("#style-div").innerHTML += "<style id='elemStyle'>.elemPos"+iElem+"{ transform: translate("+imgPortfolioWidth+"px, "+(iTop-44)+"px); transition: 1s ease-in-out; z-index:"+(100-iElem)+"} </style>";
 							//	document.querySelector("#style-div").innerHTML += "@keyframes home-anim"+iElem+"{0%{top:44px; left:0;} 100%{top:"+iTop+"px; left:"+imgPortfolioWidth+"px;}} </style>";
 								//	}
 						}else{
 							elemPosition = Math.floor(iElem/2);
 							iTop= 44+(imgPortfolioHeight*elemPosition);
 						//	document.querySelector("#style-div").innerHTML += "<style>.elemPos"+iElem+"{ top:"+iTop+"px!important; transition: 1.7s; }</style>";
-							document.querySelector("#style-div").innerHTML += "<style>.elemPos"+iElem+"{ transform: translateY("+(iTop-44)+"px); transition: 1s ease-in-out; z-index:"+(100-iElem)+" }</style>";
+							document.querySelector("#style-div").innerHTML += "<style id='elemStyle'>.elemPos"+iElem+"{ transform: translateY("+(iTop-44)+"px); transition: 1s ease-in-out; z-index:"+(100-iElem)+" }</style>";
 						}
 						elemProiect[iElem].classList.add("elemPos"+iElem);
 						if(iElem == nrElem -1){
@@ -68,6 +68,7 @@ $$(document).on('deviceready', function() {
 						}
 					}else{
 						elemProiect[iElem].classList.add("elemPos0");
+						document.querySelector("#style-div").innerHTML += "<style id='elemStyle'>.elemPos"+iElem+"{ transform: translateY("+(iTop)+"px); transition: 1s ease-in-out; z-index:"+(100-iElem)+" }</style>";
 					}
 					
 				}
@@ -96,8 +97,7 @@ $$(document).on('deviceready', function() {
 			for(iPr = 0; iPr < prNodeCount; iPr++){
 				
 				document.querySelector("#portofoliu-container").innerHTML +=
-				"<div id='proiect-home' onclick='handleClickul("+iPr+")'><div class='nume-portofoliu'>"+xmlDoc.getElementsByTagName("nume")[iPr].childNodes[0].nodeValue+"</div><div class='thumb-portofoliu'> <img src='"
-				+xmlDoc.getElementsByTagName("img")[iPr].childNodes[0].nodeValue+ "'/></div></div>";
+				"<div id='proiect-home' onclick='handleClickul("+iPr+")'><div class='nume-portofoliu'>"+xmlDoc.getElementsByTagName("nume")[iPr].childNodes[0].nodeValue+"</div><div class='thumb-portofoliu'> <img src='"+xmlDoc.getElementsByTagName("img")[iPr].childNodes[0].nodeValue+ "'/></div></div>";
 			}
 			for(iPr = 0; iPr < prNodeCount; iPr++){
 				prActiveContent = proiectXMLFunction(xml, xmlDoc.getElementsByTagName("nume")[iPr].childNodes[0].nodeValue);
