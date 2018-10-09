@@ -40,6 +40,7 @@
             document.querySelector("body").classList.remove('with-panel-left-reveal');
             document.querySelector(".panel-left").classList.remove('active');
             document.querySelector("body").classList.add('panel-closing');
+            
             setTimeout(function(){document.querySelector("body").classList.remove('panel-closing');}, 70);
             document.querySelector(".panel-left").style.display ='none';
             elemNavbar.classList.add('navbar-page-anim-start');
@@ -52,9 +53,11 @@
                 document.querySelectorAll(".navbar-inner")[1].classList.add('no-display-class');
             }, 200);
            // elemClass.classList.add("home-title-anim-2");
+           document.querySelector('#adnIframe').src = document.querySelector('#adnIframe').src;
         }
 
         function iframeLoad(){
+            
             var elemClass = document.querySelector(".home-title");
             var elemNavbar = document.querySelector(".navbar");
             elemNavbar.classList.remove('navbar-page-anim-start');
@@ -67,7 +70,8 @@
             setTimeout(function() {   
                 document.querySelectorAll(".navbar-inner")[1].classList.remove('no-display-class');
                 document.querySelectorAll(".navbar-inner")[0].classList.remove('yellow-color-class');
-            }, 600);
+            }, 1050);
+            setTimeout(function() {elemNavbar.classList.remove('navbar-page-anim-end');}, 1050);
         }
 
         function handleClickul(nrClass) {
@@ -240,7 +244,7 @@
                           Right link contains only icon - additional "icon-only" class
                           Additional "open-panel" class tells app to open panel when we click on this link
                         -->
-                        <a href="#" class="link icon-only open-panel"><i class="icon icon-bars"></i></a>
+                        <a href="#" class="link icon-only open-panel" onclick="sideMenuOpen()"><i class="icon icon-bars"></i></a>
                     </div>
                     
                 </div>
