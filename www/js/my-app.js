@@ -33,7 +33,7 @@ $$(document).on('deviceready', function() {
 			
 				homeXMLFunction(this);
 				var imgPortfolioWidth = document.querySelector(".thumb-portofoliu img").offsetWidth;
-				var imgPortfolioHeight = (imgPortfolioWidth/1.424) - 2 ;
+				var imgPortfolioHeight = Math.floor(imgPortfolioWidth/1.424) - 1 ;
 				// var proiecteHome = 
 				var elemProiect = document.querySelectorAll("#proiect-home");
 			//	var elemProiectThumb = document.querySelectorAll("#proiect-home .thumb-portofoliu");
@@ -141,15 +141,21 @@ $$(document).on('deviceready', function() {
 // Now we need to run the code that will be executed only for About page.
 
 // Option 1. Using page callback for page (for "about" page in this case) (recommended way):
-myApp.onPageInit('about', function (page) {
-    // Do something here for "about" page
+myApp.onPageInit('adn', function (page) {
+	// Do something here for "about" page
 	
+	var iframe = document.querySelector('.adn-iframe');
+	var iframeHeight = document.querySelector('.page-content').offsetHeight;
+	console.log(iframeHeight);
+	iframe.style.height = iframeHeight+"px";
+	
+
 	xmlhttp.onreadystatechange = function() {
 		//	myApp.alert(this.readyState);
 		
 			if (this.readyState == 4 && this.status == 200) {
 			
-				 myXMLFunction(this);
+				// myXMLFunction(this);
 			
 			}//else {myApp.alert("can't connect to server");}
 		  };
@@ -161,7 +167,7 @@ myApp.onPageInit('about', function (page) {
 		xmlhttp.send();
 	//	myApp.alert('test outside 2');
 	
-	function myXMLFunction(xml) {
+	function myAboutXMLFunction(xml) {
 		var xmlDoc = xml.responseXML;
 		var iPr = 0;
 		var prNodes = xmlDoc.getElementsByTagName("proiect");

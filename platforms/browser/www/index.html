@@ -12,7 +12,7 @@
         
     <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src * data:;">
 -->
-    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *; img-src * " />
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *; img-src * data:;" />
     <!-- Required meta tags-->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
@@ -33,6 +33,43 @@
 
     <link rel="stylesheet" href="css/styles.css">
     <script>
+        function newNavbarAnim(){
+            var elemClass = document.querySelector(".home-title");
+            var elemNavbar = document.querySelector(".navbar");
+            elemNavbar.classList.remove('navbar-animation');
+            document.querySelector("body").classList.remove('with-panel-left-reveal');
+            document.querySelector(".panel-left").classList.remove('active');
+            document.querySelector("body").classList.add('panel-closing');
+            setTimeout(function(){document.querySelector("body").classList.remove('panel-closing');}, 70);
+            document.querySelector(".panel-left").style.display ='none';
+            elemNavbar.classList.add('navbar-page-anim-start');
+           // setTimeout(function(){elemNavbar.classList.remove('navbar-page-anim');}, 3500);
+            elemClass.classList.remove("home-title-anim");
+            document.querySelectorAll(".navbar-inner")[0].classList.add('yellow-color-class');
+            setTimeout(function() {
+                document.querySelectorAll(".navbar-inner")[0].classList.add('no-display-class');
+                document.querySelectorAll(".navbar-inner")[0].classList.remove('navbar-inner-anim');
+                document.querySelectorAll(".navbar-inner")[1].classList.add('no-display-class');
+            }, 200);
+           // elemClass.classList.add("home-title-anim-2");
+        }
+
+        function iframeLoad(){
+            var elemClass = document.querySelector(".home-title");
+            var elemNavbar = document.querySelector(".navbar");
+            elemNavbar.classList.remove('navbar-page-anim-start');
+            elemNavbar.classList.add('navbar-page-anim-end');
+           // setTimeout(function(){elemNavbar.classList.remove('navbar-page-anim');}, 3500);
+           // elemClass.classList.remove("home-title-anim");
+            elemClass.classList.add("home-title-anim-2");
+            
+            document.querySelectorAll(".navbar-inner")[0].classList.remove('no-display-class');
+            setTimeout(function() {   
+                document.querySelectorAll(".navbar-inner")[1].classList.remove('no-display-class');
+                document.querySelectorAll(".navbar-inner")[0].classList.remove('yellow-color-class');
+            }, 600);
+        }
+
         function handleClickul(nrClass) {
 			var elem = document.querySelectorAll("#proiect-home");
             if(elem[nrClass].classList.contains("activeProiect")){
@@ -51,7 +88,8 @@
                 elem[nrClass].classList.add("activeProiect");
                 var elemProiectHeight = document.querySelector("#style-div-active-height");
                 var elemActivePictures = document.querySelectorAll(".activeProiect img");
-                elemProiectHeight.innerHTML = "<style>.activeHeight{ height:"+((elemActivePictures[0].offsetHeight*(Math.floor(elemActivePictures.length/2) + 2))+44)+"px!important; }</style>";
+                //elemProiectHeight.innerHTML = "<style>.activeHeight{ height:"+((elemActivePictures[0].offsetHeight*(Math.floor(elemActivePictures.length/2) + 2))+44)+"px!important; }</style>";
+                elemProiectHeight.innerHTML = "<style>.activeHeight{ height:"+((elemActivePictures[0].offsetHeight*(Math.floor(elemActivePictures.length/0.5) + 1))+44)+"px!important; }</style>";
                 elem[nrClass].classList.add("activeHeight");
                 document.querySelector('.home-title').innerHTML = document.querySelector('.activeProiect .nume-portofoliu').innerHTML;
                 document.querySelector(".page-content").scroll({
@@ -61,8 +99,28 @@
                 });
                 
                 setTimeout(function(){addClassProject(nrClass);}, 700);
+
                 document.querySelector(".active-project-close").classList.add("btnBackActiveP");
                 document.querySelector(".active-project-close").setAttribute("onclick", "closeProject("+nrClass+")");
+                
+                if(nrClass-1 >= 0){
+                    document.querySelector(".previous-project-btn").classList.add("btnBackActiveP");
+                    document.querySelector(".previous-project-btn").setAttribute("onclick", "prevProject("+(nrClass-1)+")");
+                }else{
+                    document.querySelector(".previous-project-btn").classList.remove("btnBackActiveP");
+                    document.querySelector(".previous-project-btn").setAttribute("onclick", " ");
+                }
+
+                if(nrClass+1 < elem.length){
+                    document.querySelector(".next-project-btn").classList.add("btnBackActiveP");
+                    document.querySelector(".next-project-btn").setAttribute("onclick", "nextProject("+(nrClass+1)+")");
+                }else{
+                    document.querySelector(".next-project-btn").classList.remove("btnBackActiveP");
+                    document.querySelector(".next-project-btn").setAttribute("onclick", " ");
+
+                }
+
+                
             }
             
         }
@@ -79,6 +137,8 @@
                 }
                 document.querySelector(".active-project-close").setAttribute("onclick", "");
                 document.querySelector(".active-project-close").classList.remove("btnBackActiveP");
+                document.querySelector(".previous-project-btn").classList.remove("btnBackActiveP");
+                document.querySelector(".next-project-btn").classList.remove("btnBackActiveP");
             }
         }
 
@@ -88,10 +148,10 @@
         }
 
         function resizeFunction(){
-            var w = window.outerWidth;
+            var w = window.innerWidth;
             var imgPortfolioWidth = w/2;
             
-            var imgPortfolioHeight = (imgPortfolioWidth/1.424) - 2 ;
+            var imgPortfolioHeight = Math.floor(imgPortfolioWidth/1.424) - 1 ;
             var elemProiect = document.querySelectorAll("#proiect-home");
             var iElem = 0;
 			var elemPosition = 0;
@@ -121,6 +181,27 @@
                     }
             }
         }
+
+        function prevProject(nrClass){
+            document.querySelector(".page-content").scroll({
+                    top: 0, 
+                    left: 0, 
+                    behavior: 'smooth' 
+                });
+            setTimeout(function(){closeProject(nrClass+1);}, 150);             
+            setTimeout(function(){handleClickul(nrClass);}, 850);
+            
+        }
+        function nextProject(nrClass){
+            document.querySelector(".page-content").scroll({
+                    top: 0, 
+                    left: 0, 
+                    behavior: 'smooth' 
+                });
+            setTimeout(function(){closeProject(nrClass-1);}, 150);
+            setTimeout(function(){handleClickul(nrClass);}, 850);
+                
+        }
     </script>
 </head>
 
@@ -129,11 +210,18 @@
     <div class="statusbar-overlay"></div>
 
     <!-- Panels overlay-->
-    <div class="panel-overlay"></div>
+    <div class="panel-overlay"><span>X</span></div>
     <!-- Left panel with reveal effect-->
     <div class="panel panel-left panel-reveal">
         <div class="content-block">
-            <p>Left panel content goes here</p>
+            <div class="side-menu-inoveo">
+                <ul>
+                    <li><a href="adn.html" class="link" onclick="newNavbarAnim()">ADN</a></li>
+                    <li><a href="#" class="link" onclick="">Link 2</a></li>
+                    <li><a href="#" class="link" onclick="">Link 3</a></li>
+                </ul>
+            </div>
+
         </div>
     </div>
 
@@ -142,10 +230,11 @@
         <!-- Your main view, should have "view-main" class -->
         <div class="view view-main">
             <!-- Top Navbar-->
-            <div class="navbar">
-                <div class="navbar-inner">
+            <div class="navbar navbar-animation">
+                <div class="navbar-inner navbar-inner-anim">
+                    
                     <!-- We need cool sliding animation on title element, so we have additional "sliding" class -->
-                    <div class="center sliding home-title">HELLO</div>
+                    <div class="center sliding home-title home-title-anim">HELLO</div>
                     <div class="right">
                         <!--
                           Right link contains only icon - additional "icon-only" class
@@ -153,6 +242,7 @@
                         -->
                         <a href="#" class="link icon-only open-panel"><i class="icon icon-bars"></i></a>
                     </div>
+                    
                 </div>
             </div>
             <!-- Pages container, because we use fixed-through navbar and toolbar, it has additional appropriate classes-->
@@ -179,9 +269,11 @@
             <div class="toolbar">
                 <div class="toolbar-inner">
                     <!-- Toolbar links -->
-                    <a href="about.html" class="link">About app</a>
-                    <a href="#" class="active-project-close" onclick="closeProject">Close Project</a>
-                    <a href="#" class="link">Link 2</a>
+                    <div class="previous-project-btn">Prev</div>
+                  <!--  <a href="adn.html" class="link" onclick="newNavbarAnim()">ADN</a> -->
+                    <a href="#" class="active-project-close" onclick="closeProject()">Close Project</a>
+                 <!--   <a href="#" class="link">Link 2</a> -->
+                    <div class="next-project-btn">Next</div>
                 </div>
             </div>
         </div>
