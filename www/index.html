@@ -44,6 +44,7 @@
             setTimeout(function(){document.querySelector("body").classList.remove('panel-closing');}, 70);
             document.querySelector(".panel-left").style.display ='none';
             elemNavbar.classList.add('navbar-page-anim-start');
+            document.querySelector(".view-menu-loader").classList.add('view-menu-loader-display');
            // setTimeout(function(){elemNavbar.classList.remove('navbar-page-anim');}, 3500);
             elemClass.classList.remove("home-title-anim");
             document.querySelectorAll(".navbar-inner")[0].classList.add('yellow-color-class');
@@ -62,6 +63,7 @@
             var elemNavbar = document.querySelector(".navbar");
             elemNavbar.classList.remove('navbar-page-anim-start');
             elemNavbar.classList.add('navbar-page-anim-end');
+            document.querySelector(".view-menu-loader").classList.remove('view-menu-loader-display');
            // setTimeout(function(){elemNavbar.classList.remove('navbar-page-anim');}, 3500);
            // elemClass.classList.remove("home-title-anim");
             elemClass.classList.add("home-title-anim-2");
@@ -235,6 +237,16 @@
         <div class="view view-main">
             <!-- Top Navbar-->
             <div class="navbar navbar-animation">
+                    <div class="view-menu-loader">
+                            <div class="plane-menu-loader main-menu-loader">
+                              <div class="circle-menu-loader"></div>
+                              <div class="circle-menu-loader"></div>
+                              <div class="circle-menu-loader"></div>
+                              <div class="circle-menu-loader"></div>
+                              <div class="circle-menu-loader"></div>
+                              <div class="circle-menu-loader"></div>
+                            </div>
+                          </div>
                 <div class="navbar-inner navbar-inner-anim">
                     
                     <!-- We need cool sliding animation on title element, so we have additional "sliding" class -->
